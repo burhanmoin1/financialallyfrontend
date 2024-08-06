@@ -1,8 +1,9 @@
-import Loginuser from "../components/LoginUser"
+import SessionCheckerForLogin from "../components/SessionCheckerForLogin"
+
 export default function Loginpage () {
     return (
         <main>
-            <Loginuser />
+            <SessionCheckerForLogin />
         </main>
     )
 

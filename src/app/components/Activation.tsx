@@ -1,48 +1,72 @@
 'use client'
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function Activation() {
     const { activation_token } = useParams();
-    const [status, setStatus] = useState('loading');
+    const [status, setStatus] = useState<'loading' | 'valid' | 'invalid' | 'success' | 'error'>('loading');
     const [message, setMessage] = useState('');
-    const router = useRouter(); // Initialize the router
+    const router = useRouter(); 
 
     useEffect(() => {
-        const verifyToken = async () => {
+        const checkTokenValidity = async () => {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/verify/${activation_token}/`);
+                const response = await axios.get(`http://127.0.0.1:8000/api/check-token-validity/${activation_token}/`);
                 
-                if (response.status === 200) {
-                    setStatus('success');
-                    setMessage('Your account has been activated successfully!');
-                } else if (response.status === 400) {
-                    setStatus('error');
-                    setMessage('Account already activated.');
-                    router.push('/?account_activated=true'); 
-                } else if (response.status === 404) {
-                    setStatus('error');
-                    setMessage('Activation token is not valid');
+                if (response.status === 200 && response.data.valid) {
+                    setStatus('valid');
+                    setMessage(response.data.message);
+                } else {
+                    setStatus('invalid');
+                    setMessage(response.data.message);
                 }
             } catch (error) {
                 console.error("Error during fetch: ", error);
                 setStatus('error');
-                setMessage('An error occurred. Please contact us for support');
+                setMessage('An error occurred. Please contact us for support.');
             }
         };
 
-        verifyToken();
-    }, [activation_token, router]); 
+        checkTokenValidity();
+    }, [activation_token]);
+
+    const verifyAccount = async () => {
+        try {
+            const response = await axios.post(`http://127.0.0.1:8000/api/verify/${activation_token}/`);
+            
+            if (response.status === 200) {
+                setStatus('success');
+                setMessage(response.data.message);
+                router.push('/?account_activated=true');
+            } else {
+                setStatus('error');
+                setMessage(response.data.message);
+            }
+        } catch (error) {
+            console.error("Error during activation: ", error);
+            setStatus('error');
+            setMessage('An error occurred. Please contact us for support.');
+        }
+    };
 
     if (status === 'loading') {
         return <div>Loading...</div>;
     }
 
     return (
-        <div>
-            <h1>{message}</h1>
+        <div className="flex flex-col items-center p-6">
+            <h1 className="text-xl font-semibold mb-4">{message}</h1>
+            {status === 'valid' && (
+                <button 
+                    onClick={verifyAccount} 
+                    className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors duration-200"
+                >
+                    Verify Account
+                </button>
+            )}
             {status === 'success' && (
-                <p>You can now log in with your account.</p>
+                <p className="text-green-600 mt-4">You can now log in with your account.</p>
             )}
         </div>
     );
