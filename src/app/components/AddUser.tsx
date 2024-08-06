@@ -47,7 +47,7 @@ const AddUser: React.FC = () => {
       const response = await axios.post('http://127.0.0.1:8000/api/createuser/', data);
 
       if (response.status === 201) {
-        dispatch(setResponseMessage('User created successfully. Please confirm your identity for access.'));
+        dispatch(setResponseMessage('User created successfully. Please confirm your email address for access.'));
       } else {
         dispatch(setResponseMessage(response.data.error || 'An error occurred'));
       }
