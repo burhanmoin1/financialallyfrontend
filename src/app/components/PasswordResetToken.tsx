@@ -35,7 +35,7 @@ const PasswordResetTokenComp: React.FC = () => {
                 <h2 className="text-xl font-bold mb-4 text-center">Password Reset</h2>
                 <div className="bg-yellow-100 border border-yellow-300 p-4 rounded-md mb-4">
                     <p className="text-yellow-800">
-                        Forgotten your password? Enter your e-mail address below, and we'll send you an e-mail allowing you to reset it.
+                        Forgotten your password? Enter your e-mail address below, and we will send you an e-mail allowing you to reset it.
                     </p>
                 </div>
                 <form onSubmit={handleSubmit}>
