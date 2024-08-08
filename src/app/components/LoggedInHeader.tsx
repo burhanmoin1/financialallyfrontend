@@ -12,7 +12,7 @@ const LoggedInHeader: React.FC<LoggedInHeaderProps> = ({ setActiveTab }) => {
   const [isDropdownOpen, setDropdownOpen] = useState<boolean>(false);
 
   const signOut = () => {
-    // Remove cookies
+    // Remove cookiesss
     Cookies.remove('user_email');
     Cookies.remove('session_token');
     Cookies.remove('name');
