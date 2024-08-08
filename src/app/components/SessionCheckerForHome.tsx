@@ -4,12 +4,16 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import ActivationRedirect from './ActivationRedirect';
 import { useRouter } from 'next/navigation';
+import LoggedInHeader from './LoggedInHeader';
+import TextSummarization from './TextSummarization';
+import TextSummaries from './TextSummaries';
 
 const SessionCheckerForHome: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [userName, setUserName] = useState('');
   const router = useRouter();
+  const [activeTab, setActiveTab] = useState<string>('home');
   
   const signOut = () => {
     // Remove cookies
@@ -59,12 +63,20 @@ const SessionCheckerForHome: React.FC = () => {
         <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-md rounded-lg text-center">
           <ActivationRedirect />
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Welcome, {userName}</h2>
-          <button
-            onClick={signOut}
-            className="w-full py-2 px-4 text-white bg-red-600 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
-          >
-            Sign Out
-          </button>
+          <div>
+          <LoggedInHeader setActiveTab={setActiveTab} />
+          <main className="p-6">
+            {activeTab === 'home' && (
+              <div>Welcome to the Home page!</div>
+            )}
+            {activeTab === 'text-summary' && (
+              <TextSummarization />
+            )}
+            {activeTab === 'summaries' && (
+              <TextSummaries />
+            )}
+          </main>
+        </div>
         </div>
       ) : (
         <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-md rounded-lg text-center">

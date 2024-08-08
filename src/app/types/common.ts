@@ -17,4 +17,12 @@ import { ReactNode } from 'react';
 export interface StoreProviderProps {
     children: ReactNode;
 }
-  
+
+export interface TextSummarizationModels {
+  name: string;
+  id: string;
+}
+
+export interface ModelState {
+  selectedModel: string;
+}

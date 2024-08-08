@@ -13,7 +13,7 @@ const UserAccountLogin: React.FC = () => {
   const handleLogin = async () => {
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/loginuser/', { email, password });
-      const { name, user_email, session_token } = response.data;
+      const { name, user_email, session_token, user_id } = response.data;
 
       Cookies.set('name', name, { expires: 7 });
       console.log('Name:', name);
@@ -23,6 +23,9 @@ const UserAccountLogin: React.FC = () => {
       
       Cookies.set('session_token', session_token, { expires: 7 });
       console.log('Session Token:', session_token);
+
+      Cookies.set('user_id', user_id, { expires: 7 });
+      console.log('User ID:', user_id);
 
       // Redirect to home page
       router.push('/');
@@ -75,6 +78,12 @@ const UserAccountLogin: React.FC = () => {
           >
             Login
           </button>
+          <a
+                href="/signup"
+                className="text-indigo-600 hover:text-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
+                Do not have an account? Sign up instead
+              </a>
         </div>
       </div>
     </div>
