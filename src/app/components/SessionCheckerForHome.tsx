@@ -58,16 +58,19 @@ const SessionCheckerForHome: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+    <div>
       {isAuthenticated ? (
-        <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-md rounded-lg text-center">
+        <div>
           <ActivationRedirect />
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Welcome, {userName}</h2>
           <div>
           <LoggedInHeader setActiveTab={setActiveTab} />
           <main className="p-6">
             {activeTab === 'home' && (
-              <div>Welcome to the Home page!</div>
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">Welcome, {userName}</h2>
+                <p>Check out one of our services from the above list</p>
+              </div>
+              
             )}
             {activeTab === 'text-summary' && (
               <TextSummarization />
@@ -79,16 +82,14 @@ const SessionCheckerForHome: React.FC = () => {
         </div>
         </div>
       ) : (
-        <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-md rounded-lg text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Welcome to Chord Site: A Smart Speech Generator</h2>
-          <p className="text-gray-700 mb-4">Please log in to access this content.</p>
-          <button
-            onClick={() => router.push('/login')}
-            className="w-full py-2 px-4 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          >
-            Log In
-          </button>
+        <div className="grid grid-cols-3 grid-rows-2 gap-0">
+        <div className="col-span-2 row-span-2 p-4 bg-blue-200">
+          Actual content 1
         </div>
+        <div className="col-span-2 row-span-2 p-4 bg-green-200">
+          Actual content 2
+        </div>
+      </div>
       )}
     </div>
   );

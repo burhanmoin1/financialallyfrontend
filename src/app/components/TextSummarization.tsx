@@ -53,7 +53,7 @@ const TextSummarization: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    const appendedText = `${userInput}\n###\nSummarize the above conversation.`;
+    const appendedText = `${userInput}`;
     setResult(null);
     setError(null);
     setLoading(true);
